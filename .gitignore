@@ -1,0 +1,26 @@
+# Toolchains and caches
+/.tools/
+**/.zig-cache/
+**/zig-cache/
+**/node_modules/
+
+# Duplicate packaging and debug intermediates
+/package/
+/native/package-staging/
+*.pdb
+/native/build/*.res
+/dist/*Project-Transfer*.zip
+/dist/NetworkStabilityTest-Windows.zip
+
+# Historical network measurements and runtime state
+/NST/outputs/
+/NST/work/*
+!/NST/work/*.ps1
+*.log
+
+# Local editor and environment files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

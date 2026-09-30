@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Router And Network Stability Test</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar">
+        <div>
+          <p class="eyebrow">Local diagnostics</p>
+          <h1>Router And Network Stability Test</h1>
+        </div>
+        <div class="state-pill" id="statePill" aria-live="polite">Idle</div>
+      </section>
+
+      <section class="control-panel">
+        <form id="runForm" class="controls" aria-label="Test controls">
+          <label for="durationValue">
+            <span>Run for</span>
+            <input id="durationValue" type="number" min="1" max="1440" step="1" value="60" required>
+          </label>
+          <label for="durationUnit">
+            <span>Unit</span>
+            <select id="durationUnit">
+              <option value="minutes" selected>Minutes</option>
+              <option value="seconds">Seconds</option>
+              <option value="hours">Hours</option>
+            </select>
+          </label>
+          <button id="startButton" type="submit">Start Test</button>
+          <button id="stopButton" type="button" class="secondary" disabled>Stop</button>
+          <button id="shutdownButton" type="button" class="danger">Shut Down App</button>
+        </form>
+        <p id="message" class="message" aria-live="polite">Choose a duration and start a test. The router check pings your gateway; network checks include public ping, DNS, and TCP 443.</p>
+        <div class="run-progress">
+          <div class="progress-header">
+            <strong id="progressText">0%</strong>
+            <div class="time-readout">
+              <span id="elapsedText">Elapsed 0s</span>
+              <span id="remainingText">Remaining 0s</span>
+            </div>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Test progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="diagnosis-panel" aria-labelledby="diagnosisHeading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Real-time health</p>
+            <h2 id="diagnosisHeading">Live Network Diagnosis</h2>
+          </div>
+          <span class="diagnosis-freshness" id="diagnosisFreshness">Waiting for status</span>
+        </div>
+        <div class="diagnosis-grid">
+          <article class="diagnosis-block" id="networkDiagnosis" data-level="waiting">
+            <div class="diagnosis-label-row">
+              <span>Overall network</span>
+              <span id="networkRatingMode">Start a test</span>
+            </div>
+            <div class="diagnosis-value-row">
+              <div class="diagnosis-number"><strong id="networkScore">--</strong><span>/100</span></div>
+              <span class="diagnosis-grade" id="networkGrade">Waiting</span>
+            </div>
+            <div class="diagnosis-meter" id="networkMeter" role="progressbar" aria-label="Overall network rating" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="diagnosis-meter-bar" id="networkMeterBar"></div>
+            </div>
+            <p class="diagnosis-detail" id="networkDiagnosisDetail">Start a test to calculate network quality.</p>
+            <p class="diagnosis-meta" id="networkMeta">Loss -- | Latency -- | 0 probes</p>
+          </article>
+
+          <article class="diagnosis-block" id="wifiDiagnosis" data-level="waiting">
+            <div class="diagnosis-label-row">
+              <span>Wi-Fi signal</span>
+              <span id="wifiName">Detecting adapter</span>
+            </div>
+            <div class="diagnosis-value-row">
+              <div class="diagnosis-number"><strong id="wifiSignal">--</strong><span>%</span></div>
+              <span class="diagnosis-grade" id="wifiGrade">Checking</span>
+            </div>
+            <div class="diagnosis-meter" id="wifiMeter" role="progressbar" aria-label="Wi-Fi signal strength" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="diagnosis-meter-bar" id="wifiMeterBar"></div>
+            </div>
+            <p class="diagnosis-detail" id="wifiDiagnosisDetail">Reading Windows wireless status.</p>
+            <p class="diagnosis-meta" id="wifiMeta" hidden></p>
+            <div class="permission-request" id="wifiPermissionRequest" hidden>
+              <strong id="wifiPermissionTitle">Allow Wi-Fi signal access</strong>
+              <p id="wifiPermissionText" aria-live="polite">Windows requires Location services and desktop-app access before it shares signal strength.</p>
+              <button id="openLocationSettingsButton" type="button" class="ghost">Open Location Settings</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="table-section" id="probeSection" hidden>
+        <h2>Live Probe Summary</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Probe</th>
+                <th scope="col">Layer</th>
+                <th scope="col">Sent</th>
+                <th scope="col">Failed</th>
+                <th scope="col">Failure</th>
+                <th scope="col">Avg ms</th>
+                <th scope="col">Last status</th>
+              </tr>
+            </thead>
+            <tbody id="probeTable">
+              <tr><td colspan="7" class="empty">No active data yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="report-section" id="reportSection" hidden>
+        <div class="section-heading">
+          <h2>Latest Report</h2>
+          <button id="loadReportButton" type="button" class="ghost" disabled>Load Report</button>
+        </div>
+        <pre id="reportBox" tabindex="0" aria-label="Latest report contents">A report will appear here when a run finishes.</pre>
+      </section>
+
+      <footer class="app-credit">A Design By Bill Jiang</footer>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
