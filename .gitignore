@@ -5,7 +5,13 @@
 **/node_modules/
 
 # Duplicate packaging and debug intermediates
-/package/
+/package/*
+!/package/NetworkStabilityTest/
+/package/NetworkStabilityTest/*
+!/package/NetworkStabilityTest/Install.cmd
+!/package/NetworkStabilityTest/Uninstall.cmd
+!/package/NetworkStabilityTest/README.txt
+!/package/NetworkStabilityTest/Launch-NetworkStabilityTest.cmd
 /native/package-staging/
 *.pdb
 /native/build/*.res
